@@ -1,0 +1,92 @@
+<div class="loginBody">
+    <div class="loginView">
+        <div  *ngIf="login" class="loginOptions child">
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+                <input type="email" formControlName="email" placeholder="Email"/>            
+                
+                <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                    <small class="error" *ngIf="loginForm.get('email')?.hasError('required')">Email is required</small>
+                    <small class="error" *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format</small>
+                </div>
+
+                <input type="password" formControlName="password" placeholder="Password"/>
+
+                <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                    <small class="error" *ngIf="loginForm.get('password')?.hasError('required')">Password is required</small>
+                </div>
+
+                <button type="submit" [disabled]="loginForm.invalid">Login</button>
+
+
+
+                <p *ngIf="error" class="error">{{error}}</p>
+
+            </form>
+            
+            <div class="horizontalRuler">
+                <hr/>
+                <p>OR</p>   
+            </div>
+
+            <div class="buttons">
+                <p>Sign in with</p>
+
+                <button><img src="assets/images/google.png" alt="google icon"/>Google</button>
+                <button><img src="assets/images/apple.png" alt="apple icon"/>Apple</button>
+            </div>
+
+            <p class="signup">Don't have an account? <a (click)="showSignup()">Sign up now!</a></p>
+        </div>
+
+        <div *ngIf="signup" class="loginOptions child">
+            <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
+                <input type="text" formControlName="firstName" placeholder="First name">
+
+                <div *ngIf="signUpForm.get('firstName')?.invalid && signUpForm.get('firstName')?.touched">
+                    <small class="error">First name is required</small>
+                </div>
+
+                <input type="text" formControlName="lastName" placeholder="Last name"/>
+                <div *ngIf="signUpForm.get('lastName')?.invalid && signUpForm.get('lastName')?.touched">
+                    <small class="error">Last name is required</small>
+                </div>
+
+                <input type="email" formControlName="email" placeholder="Email"/>
+                <div *ngIf="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched">
+                    <small class="error" *ngIf="signUpForm.get('email')?.hasError('required')">Email is required</small>
+                    <small class="error" *ngIf="signUpForm.get('email')?.hasError('email')">Invalid email format</small>
+                </div>
+
+                <input type="password" formControlName="password" placeholder="Password"/>
+                <div *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched">
+                    <small class="error" *ngIf="signUpForm.get('password')?.hasError('required')">Password is required</small>
+                </div>
+
+                <input type="password" formControlName="confirmPassword" placeholder="Confirm Password"/>
+                <div *ngIf="signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched">
+                    <small class="error" *ngIf="signUpForm.get('confirmPassword')?.hasError('required')">Please confirm your password</small>
+                </div>
+                <div *ngIf="signUpForm.hasError('mismatch')">
+                    <small class="error">Passwords do not match</small>
+                </div>
+
+                <div *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched">
+                    <small class="error check" *ngIf="signUpForm.get('password')?.hasError('minlength')">Password must be at least 8 characters</small>
+                    <small class="error check" *ngIf="signUpForm.get('password')?.hasError('passwordRequirements')">
+                        Password must contain at least one capital letter, one number, and one special character
+                    </small>
+                </div>
+
+                <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
+                <p *ngIf="error" class="error">{{error}}</p>
+            </form>
+            <p class="signup">Already have an account? <a (click)="showSignup()">Login now!</a></p>
+        </div>
+
+        <div class="child">
+            <img src="assets/images/icon.png" alt="app icon">
+            <h3>Welcome to Lawyer's Companion</h3>
+        </div> 
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="Navbar">
+    <div class="header">
+        <div class="Profile" (click)="navigateTo('profile')">
+            <img src="assets/images/avatar.jpg" alt="profile picture">
+            <h4>{{username}}</h4>
+        </div>
+
+        <div *ngIf="isMobile" class="hamburger" (click)="toggleMenu()">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </div>
+    </div>
+
+    <div *ngIf="menuOpen" class="links">
+        <ul>
+            <li (click)="navigateTo('')"><mat-icon>home</mat-icon>Home</li>
+            <li (click)="navigateTo('schedule')"><mat-icon>calendar_today</mat-icon>Schedule</li>
+            <li (click)="navigateTo('library')"><mat-icon>library_books</mat-icon>Library</li>            
+        </ul>
+
+        <ul>
+            <li><mat-icon>translate</mat-icon> Ar | En (soon)</li>
+            <li class="logout"><mat-icon>logout</mat-icon>Logout</li>
+        </ul>
+    </div>
+</div>

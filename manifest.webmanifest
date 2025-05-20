@@ -1,0 +1,26 @@
+{
+  "name": "Lawyer's Companion",
+  "short_name": "LW",
+  "theme_color": "#1976d2",
+  "background_color": "#fafafa",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "assets/images/icon.jpeg",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/images/icon.jpeg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/images/icon.jpeg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

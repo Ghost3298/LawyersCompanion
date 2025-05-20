@@ -1,0 +1,102 @@
+<app-split-screen>
+    <div class="left-side" leftContent>
+        <div class="customerHedear">
+            <h2>Customers</h2>
+            <div class="headerButtons">
+                <button (click)="toggleSort()" title="sort"><img src="assets/images/filter.png"></button>
+                <button (click)="toggleAddUser()" title="add customer">+</button>   
+            </div>
+        </div>
+
+        <input 
+          class="searchInput"
+          type="text" 
+          placeholder="Search by name or email..."
+          [formControl]="searchControl"
+        />
+
+        <ul class="users">
+            <li *ngFor="let user of filteredUsers" (click)="setCustomer(user)" [ngClass]="selectedCustomer === user ? 'selected' : ''">               
+                {{ user.firstName }} {{user.fathersName}} {{user.lastName}}
+                <span class="listImportance {{user.importance}}">{{user.importance}}</span>
+            </li>
+        </ul>
+    </div>
+
+    <div rightContent class="right-side" *ngIf="!selectedCustomer">
+        <p>Select a customer to view his details!</p>
+    </div>
+
+    <div rightContent class="right-side" *ngIf="selectedCustomer">    
+        <div class="importance">
+            <input type="radio" id="low" name="importance" value="low"
+            [checked]="selectedCustomer.importance === 'low'"
+            (change)="onImportanceChange($event)">
+            <label for="low">Low</label>
+            
+            <input type="radio" id="medium" name="importance" value="medium"
+            [checked]="selectedCustomer.importance === 'medium'"
+            (change)="onImportanceChange($event)">
+            <label for="medium">Medium</label>
+            
+            <input type="radio" id="high" name="importance" value="high"
+            [checked]="selectedCustomer.importance === 'high'"
+            (change)="onImportanceChange($event)">
+            <label for="high">High</label>
+        </div>
+
+        <div class="CustomerDetails">
+            <h2>{{ selectedCustomer.firstName }} {{selectedCustomer.fathersName}} {{selectedCustomer.lastName}}</h2>
+            <p>{{selectedCustomer.email}}</p>
+            <p>{{selectedCustomer.phone}}</p>
+        </div>
+
+        <div class="CustomerActions">
+            <a href="https://wa.me/{{selectedCustomer.phone}}" target="_blank"><img src="assets/images/whatsapp.png" alt="whatsapp"/></a>
+            <a href="mailto:{{selectedCustomer.email}}"><img src="assets/images/email.png" alt="email"/></a>
+            <a href="tel:{{selectedCustomer.phone}}"><img src="assets/images/call.png" alt="call"/></a>
+            <a href="#"><img src="assets/images/edit.png" alt="edit"/></a>
+        </div>
+
+        <div class="CustomerFolders">
+            <h5>Customer's Folders</h5>
+        </div>
+    </div>
+</app-split-screen>
+
+
+<div *ngIf="addUser" class="AddUser">
+    <button (click)="toggleAddUser()">×</button>
+    <form>
+        <div class="name-fields">
+            <input type="text" placeholder="First name..." required>
+            <input type="text" placeholder="Father's name...">
+            <input type="text" placeholder="Last name..." required>
+        </div>
+        
+        <hr>
+        
+        <div class="address-fields">
+            <input type="text" placeholder="Address..." required>
+            <div *ngFor="let address of additionalAddresses; let i = index" class="additional-field">
+                <input type="text" placeholder="Additional address..." [(ngModel)]="additionalAddresses[i]" name="address{{i+2}}">
+                <button type="button" (click)="removeAddress(i)">×</button>
+            </div>
+            <button type="button" class="add-another-btn" (click)="addAddressField()">Add another address</button>
+        </div>
+        
+        <hr>
+        
+        <div class="contact-fields">
+            <input type="email" placeholder="Email..." required>
+            <input type="tel" placeholder="Phone number..." required>
+            <div *ngFor="let phone of additionalPhones; let i = index" class="additional-field">
+                <input type="tel" placeholder="Additional phone..." [(ngModel)]="additionalPhones[i]" name="phone{{i+2}}">
+                <button type="button" (click)="removePhone(i)">×</button>
+            </div>
+            <button type="button" class="add-another-btn" (click)="addPhoneField()">Add another contact</button>
+        </div>
+        
+        <button type="submit">Add Customer</button>
+    </form>
+</div>

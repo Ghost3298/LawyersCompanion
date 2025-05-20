@@ -1,0 +1,28 @@
+<app-split-screen>
+    <div class="left-side" leftContent>
+        <div class="customerHedear">
+            <h2>Category</h2>
+            <div class="headerButtons">
+                <button  title="sort" (click)="toggleSort()"><img src="assets/images/filter.png"></button>
+                <button  title="add customer">+</button>   
+            </div>
+        </div>
+
+        <input 
+          class="searchInput"
+          type="text" 
+          placeholder="Search by category..."
+          [formControl]="searchControl"
+        />
+
+        <ul class="users">
+            <li *ngFor="let category of filteredCategories" (click)="setCategory(category)" [ngClass]="selectedCategory === category ? 'selected' : ''">               
+                {{ category.name }}
+            </li>
+        </ul>
+    </div>
+
+    <div rightContent>
+        <p>world</p>
+    </div>
+</app-split-screen>

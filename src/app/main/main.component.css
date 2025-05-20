@@ -1,0 +1,20 @@
+.main-area{
+    display: flex;
+}
+
+app-navbar{
+    width: 150px;
+}
+
+.main-router{
+    padding: 10px;
+    height: 100svh;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 650px){
+    .main-area{
+        flex-direction: column;
+    }
+}

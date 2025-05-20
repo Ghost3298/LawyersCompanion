@@ -1,0 +1,44 @@
+.dashboard {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8fafc;
+}
+
+.left-side {
+    width: 40%;
+    border-right: 1px solid #e2e8f0;
+    padding: 25px;
+    box-sizing: border-box;
+    background-color: white;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.right-side {
+    width: 60%;
+    padding: 30px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+@media screen and (max-width: 650px) {
+    .dashboard {
+        flex-direction: column;
+    }
+
+    .left-side, .right-side {
+        width: 100%;
+    }
+    
+    .left-side {
+        height: auto;
+        font-size: 14px;
+        padding: 15px;
+    }
+
+    .right-side {
+        padding: 20px;
+    }
+}

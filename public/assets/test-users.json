@@ -1,0 +1,36 @@
+{
+    "users" :[
+        {
+            "firstName":"ادي",
+            "fathersName": "جان",
+            "lastName": "لبس",
+            "email":"eddy.lebbos.98@gmail.com",
+            "phone":"+96170351850",
+            "importance":"low"
+        },
+        {
+            "firstName":"ستيفاني",
+            "fathersName": "جوزيف",
+            "lastName": "ابو صافي",
+            "email":"stephanie9abousafi@gmail.com",
+            "phone":"+96178895888",
+            "importance":"medium"
+        },
+        {
+            "firstName":"جوزيف",
+            "fathersName": "جان",
+            "lastName": "لبس",
+            "email":"joseph_lebbos_00@hotmail.com",
+            "phone":"+96179101698",
+            "importance":"low"
+        },
+        {
+            "firstName":"روني",
+            "fathersName": "جان",
+            "lastName": "لبس",
+            "email":"roni.lebbos@hotmail.com",
+            "phone":"+96171831645",
+            "importance":"high"
+        }
+    ]
+}
