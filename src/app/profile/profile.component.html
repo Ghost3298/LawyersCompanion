@@ -4,7 +4,7 @@
     <div class="profile-section">
         <p>Profile Information</p>
         <input type="text" value="Guest" [disabled]="!editName"/>
-        <button class="edit-btn" (click)="toggleEditName()">Edit Profile</button>
+        <button class="edit-btn" (click)="toggleEditName()"> {{ editMode ? 'Save' : 'Edit Profile' }}</button>
     </div>
     
     <hr/>
@@ -14,7 +14,7 @@
         <input type="password" placeholder="Current password..." [disabled]="!editPass"/>
         <input type="password" placeholder="New password..." [disabled]="!editPass"/>
         <input type="password" placeholder="Confirm password..." [disabled]="!editPass"/>
-        <button class="edit-btn" (click)="toggleEditPass()">Change Password</button>
+        <button class="edit-btn" (click)="toggleEditPass()">{{ passEditMode ? 'Save' : 'Change Password' }}</button>
     </div>
     
     <hr/>
