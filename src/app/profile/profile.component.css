@@ -1,0 +1,183 @@
+.profile-container {
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+h2 {
+    color: #1e293b;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.profile-section, .danger-section {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+}
+
+p {
+    color: #1e293b;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+input {
+    height: 40px;
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+input:disabled {
+    background-color: #f1f5f9;
+    color: #94a3b8;
+}
+
+button {
+    height: 40px;
+    padding: 0 20px;
+    background-color: #00BBF9;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 200px;
+    margin: 10px auto 0;
+    display: block;
+}
+
+button:hover {
+    background-color: #0095d9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 187, 249, 0.2);
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #e2e8f0;
+    margin: 25px 0;
+}
+
+.danger-btn {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.danger-btn:hover {
+    background-color: #fecaca;
+    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
+}
+
+.deleteAccountMotherDiv{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100svw;
+    height: 100svh;
+    z-index: 999;
+    background-color: rgba(255,255,255,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.deleteAccountDiv {
+    width: 40%;
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+.deleteAccountDiv p {
+    color: #1e293b;
+    margin-bottom: 15px;
+}
+
+.deleteAccountDiv p:last-child {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+.deleteAccountDiv button {
+    display: inline-block;
+    width: 100px;
+    margin: 10px;
+}
+
+.yesButton {
+    background-color: #dc2626;
+}
+
+.yesButton:hover {
+    background-color: #b91c1c;
+}
+
+.deleteAccountDiv button:last-child {
+    background-color: #e2e8f0;
+    color: #334155;
+}
+
+.deleteAccountDiv button:last-child:hover {
+    background-color: #cbd5e1;
+}
+
+input:focus {
+    outline: none;
+    border-color: #00BBF9;
+    box-shadow: 0 0 0 3px rgba(0, 187, 249, 0.1);
+}
+
+@media (max-width: 650px) {
+    .profile-container {
+        padding: 15px;
+    }
+    
+    .profile-section, .danger-section {
+        padding: 15px;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    button {
+        width: 100%;
+        margin: 10px 0 0;
+    }
+
+    .deleteAccountDiv{
+        width: 80%;
+    }
+
+    .deleteAccountDiv button {
+        width: 45%;
+        margin: 5px;
+    }
+}

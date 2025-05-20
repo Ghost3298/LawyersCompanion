@@ -1,1 +1,35 @@
-<p>profile works!</p>
+<div class="profile-container">
+    <h2>Guest</h2>
+    
+    <div class="profile-section">
+        <p>Profile Information</p>
+        <input type="text" value="Guest" [disabled]="!editName"/>
+        <button class="edit-btn" (click)="toggleEditName()">Edit Profile</button>
+    </div>
+    
+    <hr/>
+    
+    <div class="profile-section">
+        <p>Profile Security</p>
+        <input type="password" placeholder="Current password..." [disabled]="!editPass"/>
+        <input type="password" placeholder="New password..." [disabled]="!editPass"/>
+        <input type="password" placeholder="Confirm password..." [disabled]="!editPass"/>
+        <button class="edit-btn" (click)="toggleEditPass()">Change Password</button>
+    </div>
+    
+    <hr/>
+    
+    <div class="danger-section">
+        <p>Danger Zone</p>
+        <button class="danger-btn" (click)="toggleDeleteAccount()">Delete Account</button>
+    </div>
+</div>
+
+<div *ngIf="deleteAccountDiv" class="deleteAccountMotherDiv">
+    <div class="deleteAccountDiv">
+        <p>Are you sure you want to delete your account?</p>
+        <p>This action is irreversable!</p>
+        <button class="yesButton">yes</button>
+        <button (click)="toggleDeleteAccount()">no</button>
+    </div>
+</div>
