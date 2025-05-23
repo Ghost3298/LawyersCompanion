@@ -22,7 +22,11 @@
         </ul>
     </div>
 
-    <div rightContent>
+    <div rightContent class="right-side" *ngIf="!selectedCategory">
+        <p>Select a category to view its details!</p>
+    </div>
+
+    <div rightContent *ngIf="selectedCategory">
         <p>world</p>
     </div>
 </app-split-screen>

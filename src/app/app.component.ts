@@ -1,7 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 ;
 
 @Component({

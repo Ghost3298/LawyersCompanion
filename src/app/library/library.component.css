@@ -198,6 +198,13 @@ li:hover {
     transform: scale(1.05);
 }
 
+.right-side p {
+    color: #64748b;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 50px;
+}
+
 @media screen and (max-width: 650px) {
 
     .left-side ul{
