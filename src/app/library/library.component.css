@@ -108,6 +108,95 @@ li:hover {
     background-color: #f1f5f9;
 }
 
+.AddCategory{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+    z-index: 10;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.AddCategory form{
+    background-color: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.AddCategory input{
+     height: 40px;
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.AddCategory input:focus{
+    outline: none;
+    border-color: #00BBF9;
+    box-shadow: 0 0 0 3px rgba(0, 187, 249, 0.1);
+}
+
+.AddCategory button[type="submit"]{
+    background-color: #00BBF9;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.AddCategory button[type="submit"]:hover{
+    background-color: #0095d9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 187, 249, 0.2);
+}
+
+.AddCategory > button{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    height: 36px;
+    width: 36px;
+    background-color: #f1f5f9;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.AddCategory > button:hover{
+    background-color: #fee2e2;
+    color: #dc2626;
+    transform: scale(1.05);
+}
 
 @media screen and (max-width: 650px) {
 
@@ -115,5 +204,21 @@ li:hover {
         max-height: 200px;
         box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 2px 0px inset;
         padding: 5px;
+    }
+
+    .AddCategory{
+        position: absolute;
+        margin-top: 70px;
+        padding: 15px;
+        overflow-y: auto;
+    }
+
+    .AddCategory form{
+        padding: 20px;
+    }
+
+    .AddCategory > button{
+        top: 245px;
+        right: 5px;
     }
 }

@@ -5,6 +5,7 @@
     <div class="profile-section">
         <p>Profile Information</p>
         <input type="text" value="Guest" [disabled]="!editName"/>
+        <input type="email" value="email@e.com" [disabled]="!editName"/>
         <button class="edit-btn" (click)="toggleEditName()"> {{ editMode ? 'Save' : 'Edit Profile' }}</button>
     </div>
     

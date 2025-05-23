@@ -3,8 +3,8 @@
         <div class="customerHedear">
             <h2>Category</h2>
             <div class="headerButtons">
-                <button  title="sort" (click)="toggleSort()"><img src="assets/images/filter.png"></button>
-                <button  title="add customer">+</button>   
+                <button  title="sort" (click)="toggleSort()"><img src="assets/images/filter.png" alt="filter"></button>
+                <button  title="add customer" (click)="toggleAddCat()">+</button>   
             </div>
         </div>
 
@@ -26,3 +26,11 @@
         <p>world</p>
     </div>
 </app-split-screen>
+
+<div *ngIf="addCat" class="AddCategory">
+    <button (click)="toggleAddCat()">x</button>
+    <form>
+        <input type="text" placeholder="Category..." required>
+        <button type="submit">Save</button>
+    </form>
+</div>

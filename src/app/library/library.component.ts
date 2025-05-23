@@ -17,6 +17,7 @@ export class LibraryComponent {
   private sortByName : boolean = false;
   public filteredCategories: any[] = [];
   public searchControl = new FormControl('');
+  public addCat : boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -72,5 +73,9 @@ export class LibraryComponent {
     if (this.sortByName) {
       this.filteredCategories.sort((a, b) => a.name.localeCompare(b.name));
     }
+  }
+
+  toggleAddCat(){
+    this.addCat = !this.addCat
   }
 }
