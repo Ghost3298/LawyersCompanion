@@ -15,7 +15,7 @@ public username = 'Guest';
   public isMobile = false;
 
   constructor(
-    private router : Router
+    private router : Router,
   ){}
 
 

@@ -22,7 +22,7 @@ h2 {
     text-align: center;
 }
 
-.profile-section, .danger-section {
+.profile-section, .danger-section, .subscription-section {
     display: flex;
     flex-direction: column;
     padding: 20px;
