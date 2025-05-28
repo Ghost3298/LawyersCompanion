@@ -177,6 +177,11 @@
         min-height: 35px;
     }
 
+    .calendar-grid-cell:hover{
+        background-color: #00BBF9;
+        color: #ffffff;
+    }
+
     .calendar-grid-cell-active {
     background-color: #00BBF9;
     color: white;

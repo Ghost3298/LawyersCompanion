@@ -31,7 +31,7 @@ export class LibraryComponent {
           error: (err) => {
             console.error('Error fetching users:', err);
             this.categories = [
-              { name: 'Test User', email: 'test@example.com' , phone: '+96178895888', importance: 'low'}
+              { name: 'no categories to show'}
             ];
             this.filteredCategories = [...this.categories];
           }
