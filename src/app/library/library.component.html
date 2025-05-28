@@ -27,7 +27,14 @@
     </div>
 
     <div rightContent *ngIf="selectedCategory">
-        <p>world</p>
+        <ul>
+            <li *ngIf="!selectedCategory.content">
+                There is no content for this category.
+            </li>
+            <li *ngFor="let item of selectedCategory.content">
+                <p>{{item.title}}: <br> {{item.details}}</p>
+            </li>
+        </ul>
     </div>
 </app-split-screen>
 
