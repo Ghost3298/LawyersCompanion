@@ -30,7 +30,7 @@
        <div *ngIf="selectedCategory.content && selectedCategory.content.length > 0; else noContent">
             <ul>
                 <li *ngFor="let item of selectedCategory.content">
-                    <p>{{item.title}} - {{item.details}}</p>
+                    <p>{{item.title}}: <br/> {{item.details}}</p>
                 </li>
             </ul>
         </div>
