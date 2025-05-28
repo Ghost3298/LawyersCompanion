@@ -27,10 +27,18 @@
     </div>
 
     <div rightContent *ngIf="selectedCategory">
+        <button class="addContentButton">+</button>
        <div *ngIf="selectedCategory.content && selectedCategory.content.length > 0; else noContent">
+                <input 
+                class="searchInput"
+                type="text" 
+                placeholder="Search by content..."
+                [formControl]="contentSearchControl"
+                />
             <ul>
-                <li *ngFor="let item of selectedCategory.content">
+                <li *ngFor="let item of filteredContent">
                     <p>{{item.title}}: <br/> {{item.details}}</p>
+                    <button class="editButton" (click)="editButton()"><img src="assets/images/edit.png" ></button>
                 </li>
             </ul>
         </div>

@@ -417,6 +417,51 @@ li:hover {
     background-color: #fecaca;
 }
 
+
+.phone-toggle {
+  background-color: #f1f5f9;
+  border: none;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #64748b;
+  font-size: 12px;
+  padding: 0;
+}
+
+.phone-toggle:hover {
+  background-color: #00BBF9;
+  color: white;
+  transform: translateY(1px);
+}
+
+.phone-toggle::after {
+  content: attr(data-count);
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #00BBF9;
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.phone-toggle:hover::after {
+  opacity: 1;
+}
 @media screen and (max-width: 650px) {
 
     .left-side ul{

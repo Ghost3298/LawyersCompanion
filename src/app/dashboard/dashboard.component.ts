@@ -5,27 +5,41 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { SplitScreenComponent } from '../shared/layouts/split-screen/split-screen.component';
 import { CommonModule } from '@angular/common';
 
+interface User {
+  _id: string;
+  firstName: string;
+  fathersName: string;
+  lastName: string;
+  email: string;
+  phone: { number: string }[];
+  importance: string;
+  addresses: string[];
+}
+
 @Component({
   selector: 'app-dashboard',
   imports: [ SplitScreenComponent, ReactiveFormsModule, CommonModule, HttpClientModule, FormsModule ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
+
+
 export class DashboardComponent {
-  public users: any[] = [];
-  public filteredUsers: any[] = [];
+  public users: User[] = [];
+  public filteredUsers: User[] = [];
   public searchControl = new FormControl('');
   public selectedCustomer: any = '';
   public sortByImportance : boolean = false;
   public addUser : boolean = false;
-
+  public selectedCustomerNumber : any = '';
+  public selectedPhoneIndex: number = 0;
 
   public newUser: any = {
     firstName: '',
     fathersName: '',
     lastName: '',
     email: '',
-    phone: '',
+    phone: [],
     importance: 'low',
     addresses: [''],
   };
@@ -35,20 +49,29 @@ export class DashboardComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get('assets/test-users.json')
-      .subscribe({
-        next: (response: any) => {
-          this.users = response.users;
-          this.filteredUsers = [...this.users]; 
-        },
-        error: (err) => {
-          console.error('Error fetching users:', err);
-          this.users = [
-            { name: 'Test User', email: 'test@example.com' , phone: '+96178895888', importance: 'low'}
-          ];
-          this.filteredUsers = [...this.users];
-        }
-      });
+    this.http.get<User[]>('http://localhost:3000/api/customers')
+    .subscribe({
+      next: (response: User[]) => {
+        this.users = response;  // Direct assignment
+        this.filteredUsers = [...response]; 
+      },
+      error: (err) => {
+        console.error('Error fetching users:', err);
+        this.users = [
+          {
+            firstName: 'Test User', 
+            fathersName: 'test', 
+            lastName: 'test', 
+            email: 'test@example.com', 
+            phone: [], 
+            addresses: [], 
+            importance: 'low',
+            _id: ''
+          }
+        ];
+        this.filteredUsers = [...this.users];
+      }
+    });
 
 
     this.searchControl.valueChanges
@@ -72,18 +95,47 @@ export class DashboardComponent {
       user.firstName.toLowerCase().includes(term) ||
       user.fathersName.toLowerCase().includes(term) ||
       user.lastName.toLowerCase().includes(term) ||
-      (user.username && user.username.toLowerCase().includes(term))
+      (user.firstName && user.firstName.toLowerCase().includes(term))
     );
   }
 
   setCustomer(user : any){
     this.selectedCustomer= user;
+    this.selectedPhoneIndex = 0;
+    if (user.phone?.[0]?.number) {
+      this.selectedCustomerNumber = user.phone[0].number;
+    }
   }
+
+  togglePhoneNumber() {
+  if (this.selectedCustomer?.phone?.length > 1) {
+    this.selectedPhoneIndex = (this.selectedPhoneIndex + 1) % this.selectedCustomer.phone.length;
+    this.selectedCustomerNumber = this.selectedCustomer.phone[this.selectedPhoneIndex].number;
+  }
+}
 
   onImportanceChange(event: Event) {
     const target = event.target as HTMLInputElement;
-    if (target.checked) {
-      this.selectedCustomer.importance = target.value;
+    if (target.checked && this.selectedCustomer) {
+      const newImportance = target.value;
+      this.selectedCustomer.importance = newImportance;
+      
+      this.http.put(`http://localhost:3000/api/customers/${this.selectedCustomer._id}`, {
+        importance: newImportance
+      }).subscribe({
+        next: (updatedCustomer: any) => {
+          const index = this.users.findIndex(u => u._id === updatedCustomer._id);
+          if (index !== -1) {
+            this.users[index] = updatedCustomer;
+            this.filteredUsers = [...this.users];
+          }
+        },
+        error: (err) => {
+          console.error('Error updating customer importance:', err);
+          this.selectedCustomer.importance = this.selectedCustomer.importance === 'high' ? 'medium' : 
+                                            this.selectedCustomer.importance === 'medium' ? 'low' : 'high';
+        }
+      });
     }
   }
 
@@ -125,4 +177,55 @@ export class DashboardComponent {
   removePhone(index: number) {
     this.additionalPhones.splice(index, 1);
   } 
+
+  addCustomer(){
+    const phoneNumbers = this.additionalPhones.filter(phone=> phone.trim() !== '');
+    if(this.newUser.phone){
+      phoneNumbers.unshift(this.newUser.phone);
+    }
+
+    const addresses = this.additionalAddresses.filter(address=> address.trim() !== '');
+    if(this.newUser.addresses[0]){
+      addresses.unshift(this.newUser.addresses[0]);
+    }
+
+    const customerData ={
+       firstName: this.newUser.firstName,
+      fathersName: this.newUser.fathersName,
+      lastName: this.newUser.lastName,
+      email: this.newUser.email,
+      phone: phoneNumbers.map(number => ({ number })),
+      importance: this.newUser.importance,
+      addresses: addresses
+    };
+
+    this.http.post('http://localhost:3000/api/customers', customerData)
+      .subscribe({
+        next: (response: any)=>{
+          this.users.push(response);
+          this.filteredUsers.push(response);
+
+          this.resetForm();
+
+          this.addUser = false;
+        },
+        error: (err)=>{
+          console.log('Error adding customer:' , err);
+        }
+      });
+  }
+
+  resetForm(){
+    this.newUser = {
+    firstName: '',
+    fathersName: '',
+    lastName: '',
+    email: '',
+    phone: [],
+    importance: 'low',
+    addresses: [''],
+  };
+  this.additionalAddresses = [];
+  this.additionalPhones = [];
+  }
 }

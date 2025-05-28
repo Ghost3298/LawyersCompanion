@@ -1,5 +1,4 @@
-{
-    "users" :[
+[        
         {
             "firstName":"ادي",
             "fathersName": "جان",
@@ -7,8 +6,10 @@
             "email":"eddy.lebbos.98@gmail.com",
             "phone": [
                 {
-                    "phone1" : "+96170351850",
-                    "phone2": "+9617201522"
+                    "number": "+96170351850"
+                },
+                {
+                    "number": "+9617201522"
                 }
             ],
             "importance":"low"
@@ -18,7 +19,11 @@
             "fathersName": "جوزيف",
             "lastName": "ابو صافي",
             "email":"stephanie9abousafi@gmail.com",
-            "phone":"+96178895888",
+            "phone":[
+                {
+                    "number":"+96178895888"
+                }
+            ],
             "importance":"medium"
         },
         {
@@ -26,7 +31,11 @@
             "fathersName": "جان",
             "lastName": "لبس",
             "email":"joseph_lebbos_00@hotmail.com",
-            "phone":"+96179101698",
+            "phone":[
+                {
+                    "number": "+96179101698"
+                }
+            ],
             "importance":"low"
         },
         {
@@ -34,8 +43,11 @@
             "fathersName": "جان",
             "lastName": "لبس",
             "email":"roni.lebbos@hotmail.com",
-            "phone":"+96171831645",
+            "phone":[
+                {
+                    "number" : "+96171831645"
+                }
+            ],
             "importance":"high"
         }
     ]
-}
