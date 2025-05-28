@@ -27,7 +27,9 @@
     </div>
 
     <div rightContent *ngIf="selectedCategory">
-        <button class="addContentButton">+</button>
+        <div class="headerButtonsContent">
+            <button class="addContentButton" (click)="toggleAddContent()">+</button>
+        </div>
        <div *ngIf="selectedCategory.content && selectedCategory.content.length > 0; else noContent">
                 <input 
                 class="searchInput"
@@ -52,6 +54,15 @@
     <button (click)="toggleAddCat()">x</button>
     <form>
         <input type="text" placeholder="Category..." required>
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+<div *ngIf="addCont" class="AddCategory">
+    <button (click)="toggleAddContent()" id="exitAddContent">x</button>
+    <form>
+        <input type="text" placeholder="Title..." required>
+        <textarea placeholder="Content..." required></textarea>
         <button type="submit">Save</button>
     </form>
 </div>

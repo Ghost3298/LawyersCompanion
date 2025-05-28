@@ -31,6 +31,7 @@ export class LibraryComponent {
   public searchControl = new FormControl('');
   public contentSearchControl = new FormControl('');
   public addCat : boolean = false;
+  public addCont : boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -118,6 +119,10 @@ private filterContent(searchTerm: string): void {
 
   toggleAddCat(){
     this.addCat = !this.addCat
+  }
+
+  toggleAddContent(){
+    this.addCont = !this.addCont
   }
 
   editButton(){

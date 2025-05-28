@@ -135,7 +135,7 @@ li:hover {
     border: 1px solid #e2e8f0;
 }
 
-.AddCategory input{
+.AddCategory input, .AddCategory textarea{
      height: 40px;
     width: 100%;
     padding: 10px 15px;
@@ -145,9 +145,14 @@ li:hover {
     box-sizing: border-box;
     font-size: 14px;
     transition: all 0.3s ease;
+    resize: none;
 }
 
-.AddCategory input:focus{
+.AddCategory textarea{
+    height: 150px;
+}
+
+.AddCategory input:focus, .AddCategory textarea:focus{
     outline: none;
     border-color: #00BBF9;
     box-shadow: 0 0 0 3px rgba(0, 187, 249, 0.1);
@@ -215,6 +220,13 @@ li:hover {
     height: 25px;
 }
 
+.headerButtonsContent{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
 .addContentButton{
     height: 36px;
     width: 36px;
@@ -258,5 +270,9 @@ li:hover {
     .AddCategory > button{
         top: 245px;
         right: 5px;
+    }
+
+    #exitAddContent{
+        top: 160px
     }
 }
