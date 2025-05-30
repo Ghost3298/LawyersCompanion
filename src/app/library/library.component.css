@@ -220,6 +220,10 @@ li:hover {
     height: 25px;
 }
 
+.editButton:hover{
+    cursor: pointer;
+}
+
 .headerButtonsContent{
     width: 100%;
     display: flex;

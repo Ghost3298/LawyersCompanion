@@ -90,7 +90,7 @@
         <div class="address-fields">
             <input type="text" placeholder="Address..." required
                 [(ngModel)]="newUser.addresses[0]" name="address1">
-            <div *ngFor="let address of additionalAddresses; let i = index" class="additional-field">
+            <div *ngFor="let address of additionalAddresses; let i = index; trackBy: trackByIndex" class="additional-field">
                 <input type="text" placeholder="Additional address..." [(ngModel)]="additionalAddresses[i]" name="address{{i+2}}">
                 <button type="button" (click)="removeAddress(i)">×</button>
             </div>
@@ -104,7 +104,7 @@
                 [(ngModel)]="newUser.email" name="email">
             <input type="tel" placeholder="Phone number..." required
                 [(ngModel)]="newUser.phone" name="phone">
-            <div *ngFor="let phone of additionalPhones; let i = index" class="additional-field">
+            <div *ngFor="let phone of additionalPhones; let i = index; trackBy: trackByIndex" class="additional-field">
                 <input type="tel" placeholder="Additional phone..." [(ngModel)]="additionalPhones[i]" name="phone{{i+2}}">
                 <button type="button" (click)="removePhone(i)">×</button>
             </div>

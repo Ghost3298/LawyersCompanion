@@ -4,17 +4,8 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { SplitScreenComponent } from '../shared/layouts/split-screen/split-screen.component';
 import { CommonModule } from '@angular/common';
+import { Customer } from '../shared/models/customer';
 
-interface User {
-  _id: string;
-  firstName: string;
-  fathersName: string;
-  lastName: string;
-  email: string;
-  phone: { number: string }[];
-  importance: string;
-  addresses: string[];
-}
 
 @Component({
   selector: 'app-dashboard',
@@ -25,8 +16,8 @@ interface User {
 
 
 export class DashboardComponent {
-  public users: User[] = [];
-  public filteredUsers: User[] = [];
+  public users: Customer[] = [];
+  public filteredUsers: Customer[] = [];
   public searchControl = new FormControl('');
   public selectedCustomer: any = '';
   public sortByImportance : boolean = false;
@@ -39,7 +30,7 @@ export class DashboardComponent {
     fathersName: '',
     lastName: '',
     email: '',
-    phone: [],
+    phone: [''],
     importance: 'low',
     addresses: [''],
   };
@@ -49,9 +40,9 @@ export class DashboardComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<User[]>('http://localhost:3000/api/customers')
+    this.http.get<Customer[]>('http://localhost:3000/api/customers')
     .subscribe({
-      next: (response: User[]) => {
+      next: (response: Customer[]) => {
         this.users = response;  // Direct assignment
         this.filteredUsers = [...response]; 
       },
@@ -227,5 +218,9 @@ export class DashboardComponent {
   };
   this.additionalAddresses = [];
   this.additionalPhones = [];
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
   }
 }

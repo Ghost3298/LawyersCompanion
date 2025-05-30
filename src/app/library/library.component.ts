@@ -4,17 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
-
-interface CategoryContent {
-  title: string;
-  details: string;
-}
-
-interface Category {
-  _id?: string;
-  name: string;
-  content?: CategoryContent[];
-}
+import { Category, CategoryContent } from '../shared/models/Category';
 
 @Component({
   selector: 'app-library',

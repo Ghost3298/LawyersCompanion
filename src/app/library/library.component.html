@@ -51,7 +51,7 @@
 </app-split-screen>
 
 <div *ngIf="addCat" class="AddCategory">
-    <button (click)="toggleAddCat()">x</button>
+    <button (click)="toggleAddCat()">×</button>
     <form>
         <input type="text" placeholder="Category..." required>
         <button type="submit">Save</button>
@@ -59,7 +59,7 @@
 </div>
 
 <div *ngIf="addCont" class="AddCategory">
-    <button (click)="toggleAddContent()" id="exitAddContent">x</button>
+    <button (click)="toggleAddContent()" id="exitAddContent">×</button>
     <form>
         <input type="text" placeholder="Title..." required>
         <textarea placeholder="Content..." required></textarea>
