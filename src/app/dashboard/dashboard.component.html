@@ -67,9 +67,15 @@
         </div>
 
         <div class="CustomerFolders">
-            <h5>Client's Folders</h5>
+            <div class="CustomerFoldersButton">
+                <h5>Client's Folders</h5>
+                <div class="headerButtons">
+                    <button (click)="toggleSortFolders()" title="sort"><img src="assets/images/filter.png" alt="filter"></button>
+                    <button (click)="toggleAddFolder()" title="add folder">+</button>
+                </div>
+            </div>
             <ul *ngIf="folders.length">
-                <li *ngFor="let folder of folders">
+                <li *ngFor="let folder of folders" (click)="goToPayments(folder._id)">
                     {{folder.opponents}} - {{folder.number}} - {{folder.location}}
                     <span [ngStyle]="{ color: folder.status === 'opened' ? 'green' : 'red' }">
                         {{folder.status}}
@@ -182,5 +188,23 @@
         
         <button type="button" (click)="toggleEditMode()" *ngIf="!editMode" class="editButton">Edit</button>
         <button type="submit" *ngIf="editMode">Save</button>
+    </form>
+</div>
+
+<!-- Update your addFolder form section in dashboard.component.html -->
+<div *ngIf="addFolder" class="AddUser">
+    <button (click)="toggleAddFolder()">×</button>
+    <form #folderForm="ngForm" (ngSubmit)="addNewFolder(folderForm.value)">
+        <select name="clientId" [(ngModel)]="selectedCustomer._id" [disabled]="true">
+            <option [value]="selectedCustomer._id">{{selectedCustomer.firstName}} {{selectedCustomer.lastName}}</option>
+        </select>
+        <hr/>
+        <input type="text" name="opponents" placeholder="Opponents..." ngModel required/>
+        <input type="text" name="number" placeholder="Folder number..." ngModel required/>
+        <input type="text" name="location" placeholder="Location..." ngModel required/>
+        <hr/>
+        <input type="text" name="type" placeholder="Type..." ngModel/>
+        <input type="text" name="notes" placeholder="Notes..." ngModel/>
+        <button type="submit">Add Folder</button>
     </form>
 </div>

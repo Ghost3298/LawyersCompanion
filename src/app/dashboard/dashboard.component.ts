@@ -6,6 +6,7 @@ import { SplitScreenComponent } from '../shared/layouts/split-screen/split-scree
 import { CommonModule } from '@angular/common';
 import { Client } from '../shared/models/customer';
 import { Folder } from '../shared/models/Folder';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,12 +23,14 @@ export class DashboardComponent {
   public searchControl = new FormControl('');
   public selectedCustomer: any = '';
   public sortByImportance : boolean = false;
+  public sortByStatus: boolean = false;
   public addUser : boolean = false;
   public selectedCustomerNumber : any = '';
   public selectedPhoneIndex: number = 0;
   public editCustomer: boolean = false;
   public editMode : boolean = false;
   public folders : Folder[] =[];
+  public addFolder: Boolean = false;
 
   public newUser: any = {
     firstName: '',
@@ -41,7 +44,10 @@ export class DashboardComponent {
   public additionalAddresses: string[] = [];
   public additionalPhones: string[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router : Router
+  ) {}
 
   ngOnInit(): void {
     this.http.get<Client[]>('http://localhost:3000/api/customers')
@@ -165,6 +171,25 @@ export class DashboardComponent {
     }
   }
 
+  toggleSortFolders(){
+    this.sortByStatus = !this.sortByStatus;
+    this.sortFolders()
+  }
+
+  private sortFolders(){
+    if(this.sortByStatus){
+      this.folders.sort((a,b)=>{
+        if(a.status === b.status) return 0;
+        if(a.status === 'opened') return -1;
+        if(b.status === 'opened') return 1;
+        if(a.status === 'closed') return -1;
+        if(b.status === 'closed') return -1;
+      return 0;})
+    } else {
+      this.folders.sort((a,b)=> a.opponents.localeCompare(b.opponents));
+    }
+  }
+
   toggleAddUser(){
     this.addUser = !this.addUser
   }
@@ -244,6 +269,7 @@ export class DashboardComponent {
     handleEscapeKey(event: KeyboardEvent){
       this.addUser = false;
       this.editCustomer = false;
+      this.addFolder = false;
     }
 
 
@@ -296,4 +322,37 @@ export class DashboardComponent {
       this.additionalAddresses = [];
       this.additionalPhones = [];
     }
+
+    toggleAddFolder(){
+      this.addFolder = !this.addFolder;
+    }
+
+    // Add this method to your DashboardComponent class
+    addNewFolder(formData: any) {
+      if (!this.selectedCustomer) return;
+
+      const folderData = {
+        clientId: this.selectedCustomer._id,
+        opponents: formData.opponents,
+        number: formData.number,
+        location: formData.location,
+        type: formData.type || '',
+        notes: formData.notes || ''
+      };
+
+      this.http.post<Folder>('http://localhost:3000/api/folders', folderData)
+        .subscribe({
+          next: (response) => {
+            this.folders.unshift(response);
+            this.addFolder = false;
+          },
+          error: (err) => {
+            console.error('Error adding folder:', err);
+          }
+        });
+    }
+
+  goToPayments(folderId: string) {
+    this.router.navigate(['/home/payments', folderId]);
+  }
 }

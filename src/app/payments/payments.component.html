@@ -1,0 +1,58 @@
+<app-split-screen>
+    <div class="left-side" leftContent>
+         <div class="customerHedear">
+            <h2>Payments</h2>
+            <div class="headerButtons">
+                <button (click)="toggleSortDirection()" title="sort direction">
+                    {{sortDirection === 'asc' ? '↓' : '↑'}}
+                </button>
+                <button  title="sort" (click)="togglePaymentFilter()"><img src="assets/images/filter.png" alt="filter"></button>
+                <button  title="add payment" (click)="toggleAddPayment()">+</button>   
+            </div>
+        </div>
+
+        <input 
+            class="searchInput"
+            type="text" 
+            placeholder="Search by note, date, amount, or type..."
+            [formControl]="searchControl"
+        />
+
+        <ul class="users">
+            <li *ngFor="let p of filteredPayments">               
+                {{ p.amount }} {{p.currency}} - {{p.type}}
+                <span>{{p.displayDate}}</span>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="right-side" rightContent>
+        <div *ngIf="folderId">
+            <h3>Folder Details</h3>
+            {{folderId}}
+        </div>
+    </div>
+</app-split-screen>
+
+<div *ngIf="addPayment" class="AddUser">
+    <button (click)="toggleAddPayment()">×</button>
+    <form (ngSubmit)="onSubmit()">
+        <select [(ngModel)]="newPayment.type" name="type" required>
+            <option value="" selected disabled>Type</option>
+            <option value="fees">Fees</option>
+            <option value="expenses">Expenses</option>
+        </select>
+        <hr/>
+        <input type="number" [(ngModel)]="newPayment.amount" name="amount" placeholder="Amount..." required/>
+        <select [(ngModel)]="newPayment.currency" name="currency" required>
+            <option value="" selected disabled>currency</option>
+            <option value="USD">USD</option>
+            <option value="LBP">LBP</option>
+        </select>
+        <hr/>
+        <input type="text" [(ngModel)]="newPayment.note" name="note" placeholder="Note..." />
+        <input type="date" [(ngModel)]="newPayment.date" name="date" />
+        <button type="submit">Add Payment</button>
+    </form>
+</div>

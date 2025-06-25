@@ -1,5 +1,5 @@
 export interface Folder {
-    _id?: string;
+    _id: string;
     clientId: string;  
     opponents: string;
     number: string;
