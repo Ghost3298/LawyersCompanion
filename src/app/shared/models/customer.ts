@@ -1,4 +1,4 @@
-export interface Customer {
+export interface Client {
   _id: string;
   firstName: string;
   fathersName: string;
@@ -7,4 +7,11 @@ export interface Customer {
   phone: { number: string }[];
   importance: string;
   addresses: string[];
+}
+
+export interface folder {
+  _id?: string;
+  title: string;
+  number: string;
+  location: string;
 }

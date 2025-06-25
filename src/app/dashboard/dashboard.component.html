@@ -1,7 +1,7 @@
 <app-split-screen>
     <div class="left-side" leftContent>
         <div class="customerHedear">
-            <h2>Customers</h2>
+            <h2>Clients</h2>
             <div class="headerButtons">
                 <button (click)="toggleSort()" title="sort"><img src="assets/images/filter.png" alt="filter"></button>
                 <button (click)="toggleAddUser()" title="add customer">+</button>   
@@ -63,11 +63,23 @@
             <a href="https://wa.me/{{selectedCustomerNumber}}" target="_blank"><img src="assets/images/whatsapp.png" alt="whatsapp"/></a>
             <a href="mailto:{{selectedCustomer.email}}"><img src="assets/images/email.png" alt="email"/></a>
             <a href="tel:{{selectedCustomerNumber}}"><img src="assets/images/call.png" alt="call"/></a>
-            <a href="#"><img src="assets/images/edit.png" alt="edit"/></a>
+            <a (click)="toggleEditCustomer()"><img src="assets/images/edit.png" alt="edit"/></a>
         </div>
 
         <div class="CustomerFolders">
-            <h5>Customer's Folders</h5>
+            <h5>Client's Folders</h5>
+            <ul *ngIf="folders.length">
+                <li *ngFor="let folder of folders">
+                    {{folder.opponents}} - {{folder.number}} - {{folder.location}}
+                    <span [ngStyle]="{ color: folder.status === 'opened' ? 'green' : 'red' }">
+                        {{folder.status}}
+                    </span>
+                </li>
+            </ul>
+
+            <ul *ngIf="!folders.length">
+                <li>No folders for this client yet</li>
+            </ul>
         </div>
     </div>
 </app-split-screen>
@@ -112,5 +124,63 @@
         </div>
         
         <button type="submit">Add Customer</button>
+    </form>
+</div>
+
+<div *ngIf="editCustomer" class="AddUser">
+    <button (click)="toggleEditCustomer()">×</button>
+    <form (ngSubmit)="submitEdit()">
+        <!-- Name Fields -->
+        <div class="name-fields">
+            <input type="text" [(ngModel)]="selectedCustomer.firstName" name="firstName" [disabled]="!editMode">
+            <input type="text" [(ngModel)]="selectedCustomer.fathersName" name="fathersName" [disabled]="!editMode">
+            <input type="text" [(ngModel)]="selectedCustomer.lastName" name="lastName" [disabled]="!editMode">
+        </div>
+        
+        <hr>
+        
+        <!-- Address Fields -->
+        <div class="address-fields">
+            <div *ngFor="let address of selectedCustomer.addresses; let i = index" class="address-field">
+                <input type="text" [(ngModel)]="selectedCustomer.addresses[i]" 
+                       name="address{{i}}" [disabled]="!editMode">
+            </div>
+            
+            <div *ngFor="let address of additionalAddresses; let i = index; trackBy: trackByIndex" class="additional-field">
+                <input type="text" placeholder="Additional address..." 
+                       [(ngModel)]="additionalAddresses[i]" name="newAddress{{i}}">
+                <button type="button" (click)="removeAddress(i)">×</button>
+            </div>
+            
+            <button *ngIf="editMode" type="button" class="add-another-btn" (click)="addAddressField()">
+                Add another address
+            </button>
+        </div>
+        
+        <hr>
+        
+        <!-- Contact Fields -->
+        <div class="contact-fields">
+            <!-- Email -->
+            <input type="email" [(ngModel)]="selectedCustomer.email" name="email" [disabled]="!editMode">
+            
+            <!-- Phone Numbers -->
+            <div *ngFor="let phone of selectedCustomer.phone; let i = index" class="phone-field">
+                <input type="text" [(ngModel)]="phone.number" name="phone{{i}}" [disabled]="!editMode">
+            </div>
+            
+            <div *ngFor="let phone of additionalPhones; let i = index; trackBy: trackByIndex" class="additional-field">
+                <input type="tel" placeholder="Additional phone..." 
+                       [(ngModel)]="additionalPhones[i]" name="newPhone{{i}}">
+                <button type="button" (click)="removePhone(i)">×</button>
+            </div>
+            
+            <button *ngIf="editMode" type="button" class="add-another-btn" (click)="addPhoneField()">
+                Add another phone number
+            </button>
+        </div>
+        
+        <button type="button" (click)="toggleEditMode()" *ngIf="!editMode" class="editButton">Edit</button>
+        <button type="submit" *ngIf="editMode">Save</button>
     </form>
 </div>

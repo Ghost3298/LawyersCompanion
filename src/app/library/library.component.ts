@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { SplitScreenComponent } from "../shared/layouts/split-screen/split-screen.component";
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -118,4 +118,10 @@ private filterContent(searchTerm: string): void {
   editButton(){
     console.log('edit')
   }
+
+   @HostListener('document:keydown.escape', ['$event'])
+    handleEscapeKey(event: KeyboardEvent){
+      this.addCat = false;
+      this.addCont = false;
+    }
 }

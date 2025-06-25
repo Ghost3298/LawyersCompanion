@@ -231,12 +231,15 @@ li:hover {
     padding: 15px;
     background-color: #f8fafc;
     border-radius: 12px;
+    overflow-y: auto;
+    max-height: 31svh
 }
 
 .CustomerFolders h5 {
     color: #1e293b;
     font-size: 1.1rem;
     margin: 0 0 15px 0;
+    position: fixed;
 }
 
 /* Empty state */
@@ -314,7 +317,7 @@ li:hover {
     margin: 20px 0;
 }
 
-.AddUser button[type="submit"] {
+.AddUser button[type="submit"], .editButton {
     background-color: #00BBF9;
     color: white;
     border: none;
@@ -326,6 +329,10 @@ li:hover {
     transition: all 0.3s ease;
     width: 100%;
     margin-top: 10px;
+}
+
+.editButton{
+    background-color: rgb(1, 179, 1);
 }
 
 .AddUser button[type="submit"]:hover {
@@ -462,6 +469,13 @@ li:hover {
 .phone-toggle:hover::after {
   opacity: 1;
 }
+
+@media screen and (max-width: 1300px){
+    .CustomerFolders{
+        max-height: 27svh;
+    }
+}
+
 @media screen and (max-width: 650px) {
 
     .left-side ul{

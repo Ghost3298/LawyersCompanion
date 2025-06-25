@@ -1,53 +1,22 @@
 [        
-        {
-            "firstName":"ادي",
-            "fathersName": "جان",
-            "lastName": "لبس",
-            "email":"eddy.lebbos.98@gmail.com",
-            "phone": [
-                {
-                    "number": "+96170351850"
-                },
-                {
-                    "number": "+9617201522"
-                }
-            ],
-            "importance":"low"
-        },
-        {
-            "firstName":"ستيفاني",
-            "fathersName": "جوزيف",
-            "lastName": "ابو صافي",
-            "email":"stephanie9abousafi@gmail.com",
-            "phone":[
-                {
-                    "number":"+96178895888"
-                }
-            ],
-            "importance":"medium"
-        },
-        {
-            "firstName":"جوزيف",
-            "fathersName": "جان",
-            "lastName": "لبس",
-            "email":"joseph_lebbos_00@hotmail.com",
-            "phone":[
-                {
-                    "number": "+96179101698"
-                }
-            ],
-            "importance":"low"
-        },
-        {
-            "firstName":"روني",
-            "fathersName": "جان",
-            "lastName": "لبس",
-            "email":"roni.lebbos@hotmail.com",
-            "phone":[
-                {
-                    "number" : "+96171831645"
-                }
-            ],
-            "importance":"high"
-        }
-    ]
+    {
+        "firstName": "eddy",
+        "fathersName" : "jean",
+        "lastName" : "lebbos",
+        "email": "eddy.lebbos@hotmail.com",
+        "phone": [
+            {
+                "number": "+96170351850"
+            },
+            {
+                "number": "+9617200279"
+            }
+        ],
+        "importance": "low",
+        "addresses": [
+            "maghdouche", "beirut"
+        ],
+        "createdAt" : "",
+        "updatedAt": ""
+    }
+]

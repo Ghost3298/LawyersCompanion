@@ -1,10 +1,11 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { SplitScreenComponent } from '../shared/layouts/split-screen/split-screen.component';
 import { CommonModule } from '@angular/common';
-import { Customer } from '../shared/models/customer';
+import { Client } from '../shared/models/customer';
+import { Folder } from '../shared/models/Folder';
 
 
 @Component({
@@ -16,14 +17,17 @@ import { Customer } from '../shared/models/customer';
 
 
 export class DashboardComponent {
-  public users: Customer[] = [];
-  public filteredUsers: Customer[] = [];
+  public users: Client[] = [];
+  public filteredUsers: Client[] = [];
   public searchControl = new FormControl('');
   public selectedCustomer: any = '';
   public sortByImportance : boolean = false;
   public addUser : boolean = false;
   public selectedCustomerNumber : any = '';
   public selectedPhoneIndex: number = 0;
+  public editCustomer: boolean = false;
+  public editMode : boolean = false;
+  public folders : Folder[] =[];
 
   public newUser: any = {
     firstName: '',
@@ -40,9 +44,9 @@ export class DashboardComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<Customer[]>('http://localhost:3000/api/customers')
+    this.http.get<Client[]>('http://localhost:3000/api/customers')
     .subscribe({
-      next: (response: Customer[]) => {
+      next: (response: Client[]) => {
         this.users = response;  // Direct assignment
         this.filteredUsers = [...response]; 
       },
@@ -50,12 +54,12 @@ export class DashboardComponent {
         console.error('Error fetching users:', err);
         this.users = [
           {
-            firstName: 'Test User', 
-            fathersName: 'test', 
-            lastName: 'test', 
-            email: 'test@example.com', 
-            phone: [], 
-            addresses: [], 
+            firstName: 'Test User',
+            fathersName: 'test',
+            lastName: 'test',
+            email: 'test@example.com',
+            phone: [],
+            addresses: [],
             importance: 'low',
             _id: ''
           }
@@ -96,6 +100,18 @@ export class DashboardComponent {
     if (user.phone?.[0]?.number) {
       this.selectedCustomerNumber = user.phone[0].number;
     }
+
+    this.folders = []; 
+  
+  this.http.get<Folder[]>(`http://localhost:3000/api/clients/${user._id}/folders`)
+    .subscribe({
+      next: (response) => {
+        this.folders = response;
+      },
+      error: (err) => {
+        console.error('Error fetching folders:', err);
+      }
+    });
   }
 
   togglePhoneNumber() {
@@ -223,4 +239,61 @@ export class DashboardComponent {
   trackByIndex(index: number, item: any): number {
     return index;
   }
+
+  @HostListener('document:keydown.escape', ['$event'])
+    handleEscapeKey(event: KeyboardEvent){
+      this.addUser = false;
+      this.editCustomer = false;
+    }
+
+
+    toggleEditMode(){
+      this.editMode= !this.editMode
+    }
+
+    submitEdit() {
+      if (!this.selectedCustomer) return;
+
+      const updatedAddresses = [...this.selectedCustomer.addresses, ...this.additionalAddresses.filter(addr => addr.trim() !== '')];
+      
+      const updatedPhones = [
+        ...this.selectedCustomer.phone,
+        ...this.additionalPhones.filter(phone => phone.trim() !== '').map(number => ({ number }))
+      ];
+
+      const updatedCustomer = {
+        ...this.selectedCustomer,
+        addresses: updatedAddresses,
+        phone: updatedPhones
+      };
+
+      this.http.put(`http://localhost:3000/api/customers/${this.selectedCustomer._id}`, updatedCustomer)
+        .subscribe({
+          next: (response: any) => {
+            // Update the local data
+            const index = this.users.findIndex(u => u._id === response._id);
+            if (index !== -1) {
+              this.users[index] = response;
+              this.filteredUsers = [...this.users];
+              this.selectedCustomer = response;
+            }
+            
+            // Reset edit mode
+            this.editMode = false;
+            this.editCustomer = false;
+            this.additionalAddresses = [];
+            this.additionalPhones = [];
+          },
+          error: (err) => {
+            console.error('Error updating customer:', err);
+          }
+        });
+    }
+
+    toggleEditCustomer() {
+      this.editCustomer = !this.editCustomer;
+      this.editMode = false;
+      this.additionalAddresses = [];
+      this.additionalPhones = [];
+    }
 }
