@@ -1,9 +1,129 @@
 <app-split-screen>
     <div leftContent class="leftContent">
-        <app-calendar></app-calendar>
+        <app-calendar 
+            [appointments]="appointments"
+            (dateSelected)="onDateSelected($event)"
+            (appointmentSelected)="selectAppointment($event)">
+        </app-calendar>
+
+        <button class="add-appointment-btn" (click)="openAppointmentForm(selectedDate)">
+            + Add Appointment
+        </button>
     </div>
 
-    <div rightContent>
-        details
+    <div rightContent *ngIf="selectedAppointment" class="appointment-details">
+        <h3>Appointment Details</h3>
+
+        <table>
+            <tr>
+                <td><strong>Date:</strong></td>
+                <td>{{selectedAppointment.date | date}} at {{selectedAppointment.time}}</td>
+            </tr>
+            <tr>
+                <td><strong>Client</strong></td>
+                <td>
+                    <span *ngIf="!selectedAppointment.isExternalClient; else externalClient">
+                        {{selectedAppointment.clientId?.firstName}} {{selectedAppointment.clientId?.lastName}}
+                    </span>
+                    <ng-template #externalClient>
+                        {{selectedAppointment.clientName}} (External)
+                    </ng-template>
+                </td>
+            </tr>
+            <tr *ngIf="selectedAppointment.folderId || selectedAppointment.folderName">
+                <td><strong>Folder:</strong></td>
+                <td>
+                    <span *ngIf="selectedAppointment.folderId; else folderName">
+                        {{selectedAppointment.folderId?.number}} - {{selectedAppointment.folderId?.type}}
+                    </span>
+                    <ng-template #folderName>
+                        {{selectedAppointment.folderName}}
+                    </ng-template>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Location:</strong></td>
+                <td>{{selectedAppointment.location}}</td>
+            </tr>
+            <tr>
+                <td><strong>Notes:</strong></td>
+                <td>{{selectedAppointment.notes}}</td>
+            </tr>
+
+        </table>
+        
+        <div class="buttonsGroup">
+            <button (click)="editAppointment(selectedAppointment)">Edit</button>
+            <button (click)="deleteAppointment(selectedAppointment._id)">Delete</button>
+        </div>
     </div>
 </app-split-screen>
+
+<app-popup-form [isOpen]="showAppointmentForm">
+    <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()" formContent>
+                <input type="date" formControlName="date" hidden>
+                
+                <div class="form-toggle">
+                    <button type="button" 
+                            [class.active]="!useExternalClient"
+                            (click)="toggleClientType(false)"
+                            class="setClientType">Existing Client</button>
+                    <button type="button" 
+                            [class.active]="useExternalClient"
+                            (click)="toggleClientType(true)"
+                            class="setClientType">New Client</button>
+                </div>
+
+                <div *ngIf="!useExternalClient">
+                    <div>
+                        <label>Client:</label>
+                        <select formControlName="clientId" (change)="onClientSelect()">
+                            <option value="">Select Client</option>
+                            <option *ngFor="let client of clients" [value]="client._id">
+                                {{client.firstName}} {{client.lastName}}
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Folder (optional):</label>
+                        <select formControlName="folderId">
+                            <option value="">No Folder</option>
+                            <option *ngFor="let folder of folders" [value]="folder._id">
+                                {{folder.number}} - {{folder.type}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div *ngIf="useExternalClient">
+                    <div>
+                        <label>Client Name:</label>
+                        <input type="text" formControlName="clientName" placeholder="Full name" required>
+                    </div>
+                    <div>
+                        <label>Folder Name (optional):</label>
+                        <input type="text" formControlName="folderName" placeholder="Folder description">
+                    </div>
+                </div>
+                
+                <div>
+                    <label>Time:</label>
+                    <input type="time" formControlName="time" required>
+                </div>
+                
+                <div>
+                    <label>Location:</label>
+                    <input type="text" formControlName="location" required>
+                </div>
+                
+                <div>
+                    <label>Notes:</label>
+                    <textarea formControlName="notes"></textarea>
+                </div>
+                
+                <div class="buttonsGroup">
+                    <button type="submit">Save</button>
+                    <button type="button" (click)="showAppointmentForm = false" class="CancelButton">Cancel</button>
+                </div>
+            </form>
+</app-popup-form>

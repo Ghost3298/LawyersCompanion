@@ -97,6 +97,11 @@ li {
     align-items: center;
 }
 
+li > div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
 li:hover {
     cursor: pointer;
     background-color: #f1f5f9;
@@ -108,7 +113,7 @@ li:hover {
     background-color: #f1f5f9;
 }
 
-.AddCategory{
+/* .AddCategory{
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -201,7 +206,7 @@ li:hover {
     background-color: #fee2e2;
     color: #dc2626;
     transform: scale(1.05);
-}
+} */
 
 .right-side p {
     color: #64748b;
@@ -252,6 +257,49 @@ li:hover {
     transform: scale(1.05);
 }
 
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: space-evenly;
+}
+
+.edit-buttons button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-buttons button:first-child {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.edit-buttons button:last-child {
+  background-color: #f44336;
+  color: white;
+}
+
+form input, form textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 10px;
+  box-sizing: border-box;
+}
+form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+form input:focus, form textarea:focus{
+    outline: none;
+    border-color: #00BBF9;
+    box-shadow: 0 0 0 3px rgba(0, 187, 249, 0.1);
+}
+
 @media screen and (max-width: 650px) {
 
     .left-side ul{
@@ -259,7 +307,7 @@ li:hover {
         box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 2px 0px inset;
         padding: 5px;
     }
-
+/* 
     .AddCategory{
         position: absolute;
         margin-top: 70px;
@@ -274,7 +322,7 @@ li:hover {
     .AddCategory > button{
         top: 245px;
         right: 5px;
-    }
+    } */
 
     #exitAddContent{
         top: 160px

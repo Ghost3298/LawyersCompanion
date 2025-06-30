@@ -10,13 +10,20 @@ import { DateTime, Info, Interval } from 'luxon';
 })
 export class CalendarComponent implements OnInit {
 
+  selectedAppointmentId: string | null = null;
+
   @Input() appointments: any[] =[];
   @Output() appointmentSelected = new EventEmitter<any>();
-  
-  onAppointmentClick(appointment: any) {
+  @Output() dateSelected = new EventEmitter<DateTime>();
+
+onAppointmentClick(appointment: any): void {
+    this.selectedAppointmentId = appointment._id;
     this.appointmentSelected.emit(appointment);
-  }
+}
   
+isSelected(appointment: any): boolean {
+    return this.selectedAppointmentId === appointment._id;
+}
   today: Signal<DateTime> = signal(DateTime.local());
 
   firstDayOfActiveMonth: WritableSignal<DateTime> = signal(
@@ -29,6 +36,7 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     // Automatically select today's date when component initializes
     this.activeDay.set(this.today());
+    this.dateSelected.emit(this.today());
   }
 
   daysOfMonth: Signal<DateTime[]> = computed(() => {
@@ -65,29 +73,52 @@ export class CalendarComponent implements OnInit {
   }
 
   getAppointmentsForDay(day: DateTime): any[] {
-    if (!this.appointments) return [];
-    
-    return this.appointments
-      .filter(appointment => {
-        if (!appointment || !appointment.date) return false;
-        
-        const appointmentDate = appointment.date instanceof Date 
-          ? DateTime.fromJSDate(appointment.date) 
-          : DateTime.fromFormat(appointment.date, 'dd-MM-yyyy');
-        
-        return appointmentDate.isValid && appointmentDate.hasSame(day, 'day');
-      })
-      .sort((a, b) => {
-        const timeA = a.time.hours * 60 + (a.time.minutes || 0);
-        const timeB = b.time.hours * 60 + (b.time.minutes || 0);
-        return timeA - timeB;
-      });
-  }
+  if (!this.appointments) return [];
+  
+  return this.appointments
+    .filter(appointment => {
+      if (!appointment || !appointment.date) return false;
+      
+      // Handle both string and Date formats
+      let appointmentDate: DateTime;
+      if (typeof appointment.date === 'string') {
+        // Try ISO format first, then your custom format
+        appointmentDate = DateTime.fromISO(appointment.date) || 
+                         DateTime.fromFormat(appointment.date, 'yyyy-MM-dd');
+      } else if (appointment.date instanceof Date) {
+        appointmentDate = DateTime.fromJSDate(appointment.date);
+      } else {
+        return false;
+      }
+      
+      // Compare just the date parts (ignore time)
+      return appointmentDate.hasSame(day, 'day');
+    })
+    .sort((a, b) => {
+      const timeA = typeof a.time === 'string' ? 
+                   this.timeStringToMinutes(a.time) : 
+                   a.time.hours * 60 + (a.time.minutes || 0);
+      const timeB = typeof b.time === 'string' ? 
+                   this.timeStringToMinutes(b.time) : 
+                   b.time.hours * 60 + (b.time.minutes || 0);
+      return timeA - timeB;
+    });
+}
+
+private timeStringToMinutes(timeStr: string): number {
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  return hours * 60 + minutes;
+}
 
   formatTime(time: { hours: number, minutes: number } | string): string {
     if (typeof time === 'string') return time;
     const hours = time.hours.toString().padStart(2, '0');
     const minutes = time.minutes.toString().padStart(2, '0');
     return `${hours}:${minutes}`;
+  }
+
+  setActiveDay(day: DateTime):void{
+    this.activeDay.set(day);
+    this.dateSelected.emit(day);
   }
 }

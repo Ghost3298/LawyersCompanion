@@ -33,7 +33,7 @@
               'calendar-grid-cell-inactive':
                 dayOfMonth.month !== firstDayOfActiveMonth().month
             }"
-            (click)="activeDay.set(dayOfMonth)"
+            (click)="setActiveDay(dayOfMonth)"
           >
             {{ dayOfMonth.day }}
           </div>
@@ -44,29 +44,33 @@
       <div class="schedule-headline">
         @if (activeDay(); as activeDay) {
           <div>{{ activeDay.toLocaleString(DATE_MED) }}</div>
-        } @else {
-          <div>Please select a day</div>
         }
       </div>
       <div class="appointment-list">
         @if (activeDay(); as activeDay) {
           @if (getAppointmentsForDay(activeDay).length > 0) {
             @for (appointment of getAppointmentsForDay(activeDay); track $index) {
-              <div class="appointment-item" (click)="onAppointmentClick(appointment)">
+              <div class="appointment-item" 
+                  (click)="onAppointmentClick(appointment)"
+                  [class.selected]="isSelected(appointment)">
                 <strong>{{ formatTime(appointment.time) }}</strong>
-                -
-                <span 
-                  [class.pending]="appointment.status === 'Pending'"
-                  [class.done]="appointment.status === 'Done'"
-                  [class.cancelled]="appointment.status === 'Cancelled'">
-                  {{appointment.status}}
+                - 
+                <span *ngIf="appointment.clientId; else externalClient">
+                  {{ appointment.clientId.firstName }} {{ appointment.clientId.lastName }}
                 </span>
+                <ng-template #externalClient>
+                  {{ appointment.clientName }} (External)
+                </ng-template>
+                <span *ngIf="appointment.folderId">({{ appointment.folderId?.number }})</span>
+                <div class="appointment-status" [class]="appointment.status?.toLowerCase()">
+                  {{ appointment.status }}
+                </div>
               </div>
             }
           } @else {
-            <div  class="appointment-item">Nothing scheduled for this day</div>
+            <div class="appointment-item empty">Nothing scheduled for this day</div>
           }
         }
       </div>
     </div>
-  </div>
+</div>

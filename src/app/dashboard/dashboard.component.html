@@ -91,51 +91,51 @@
 </app-split-screen>
 
 
-<div *ngIf="addUser" class="AddUser">
-    <button (click)="toggleAddUser()">×</button>
-    <form (ngSubmit)="addCustomer()">
-        <div class="name-fields">
-            <input type="text" placeholder="First name..." required
-                [(ngModel)]="newUser.firstName" name="firstName">
-            <input type="text" placeholder="Father's name..."
-                [(ngModel)]="newUser.fathersName" name="fathersName">
-            <input type="text" placeholder="Last name..." required
-                [(ngModel)]="newUser.lastName" name="lastName">
-        </div>
-        
-        <hr>
-        
-        <div class="address-fields">
-            <input type="text" placeholder="Address..." required
-                [(ngModel)]="newUser.addresses[0]" name="address1">
-            <div *ngFor="let address of additionalAddresses; let i = index; trackBy: trackByIndex" class="additional-field">
-                <input type="text" placeholder="Additional address..." [(ngModel)]="additionalAddresses[i]" name="address{{i+2}}">
-                <button type="button" (click)="removeAddress(i)">×</button>
+<!-- Add Client -->
+<app-popup-form [isOpen]="addUser">
+    <form (ngSubmit)="addCustomer()" formContent>
+            <div class="name-fields">
+                <input type="text" placeholder="First name..." required
+                    [(ngModel)]="newUser.firstName" name="firstName">
+                <input type="text" placeholder="Father's name..."
+                    [(ngModel)]="newUser.fathersName" name="fathersName">
+                <input type="text" placeholder="Last name..." required
+                    [(ngModel)]="newUser.lastName" name="lastName">
             </div>
-            <button type="button" class="add-another-btn" (click)="addAddressField()">Add another address</button>
-        </div>
-        
-        <hr>
-        
-        <div class="contact-fields">
-            <input type="email" placeholder="Email..." required
-                [(ngModel)]="newUser.email" name="email">
-            <input type="tel" placeholder="Phone number..." required
-                [(ngModel)]="newUser.phone" name="phone">
-            <div *ngFor="let phone of additionalPhones; let i = index; trackBy: trackByIndex" class="additional-field">
-                <input type="tel" placeholder="Additional phone..." [(ngModel)]="additionalPhones[i]" name="phone{{i+2}}">
-                <button type="button" (click)="removePhone(i)">×</button>
+            
+            <hr>
+            
+            <div class="address-fields">
+                <input type="text" placeholder="Address..." required
+                    [(ngModel)]="newUser.addresses[0]" name="address1">
+                <div *ngFor="let address of additionalAddresses; let i = index; trackBy: trackByIndex" class="additional-field">
+                    <input type="text" placeholder="Additional address..." [(ngModel)]="additionalAddresses[i]" name="address{{i+2}}">
+                    <button type="button" (click)="removeAddress(i)">×</button>
+                </div>
+                <button type="button" class="add-another-btn" (click)="addAddressField()">Add another address</button>
             </div>
-            <button type="button" class="add-another-btn" (click)="addPhoneField()">Add another contact</button>
-        </div>
-        
-        <button type="submit">Add Customer</button>
-    </form>
-</div>
+            
+            <hr>
+            
+            <div class="contact-fields">
+                <input type="email" placeholder="Email..." required
+                    [(ngModel)]="newUser.email" name="email">
+                <input type="tel" placeholder="Phone number..." required
+                    [(ngModel)]="newUser.phone" name="phone">
+                <div *ngFor="let phone of additionalPhones; let i = index; trackBy: trackByIndex" class="additional-field">
+                    <input type="tel" placeholder="Additional phone..." [(ngModel)]="additionalPhones[i]" name="phone{{i+2}}">
+                    <button type="button" (click)="removePhone(i)">×</button>
+                </div>
+                <button type="button" class="add-another-btn" (click)="addPhoneField()">Add another contact</button>
+            </div>
+            
+            <button type="submit">Add Customer</button>
+        </form>
+</app-popup-form>
 
-<div *ngIf="editCustomer" class="AddUser">
-    <button (click)="toggleEditCustomer()">×</button>
-    <form (ngSubmit)="submitEdit()">
+<!-- Edit User -->
+<app-popup-form [isOpen]="editCustomer">
+    <form (ngSubmit)="submitEdit()" formContent>
         <!-- Name Fields -->
         <div class="name-fields">
             <input type="text" [(ngModel)]="selectedCustomer.firstName" name="firstName" [disabled]="!editMode">
@@ -189,12 +189,11 @@
         <button type="button" (click)="toggleEditMode()" *ngIf="!editMode" class="editButton">Edit</button>
         <button type="submit" *ngIf="editMode">Save</button>
     </form>
-</div>
+</app-popup-form>
 
-<!-- Update your addFolder form section in dashboard.component.html -->
-<div *ngIf="addFolder" class="AddUser">
-    <button (click)="toggleAddFolder()">×</button>
-    <form #folderForm="ngForm" (ngSubmit)="addNewFolder(folderForm.value)">
+<!-- Add Folder -->
+<app-popup-form [isOpen]="addFolder">
+   <form #folderForm="ngForm" (ngSubmit)="addNewFolder(folderForm.value)" formContent>
         <select name="clientId" [(ngModel)]="selectedCustomer._id" [disabled]="true">
             <option [value]="selectedCustomer._id">{{selectedCustomer.firstName}} {{selectedCustomer.lastName}}</option>
         </select>
@@ -207,4 +206,4 @@
         <input type="text" name="notes" placeholder="Notes..." ngModel/>
         <button type="submit">Add Folder</button>
     </form>
-</div>
+</app-popup-form>

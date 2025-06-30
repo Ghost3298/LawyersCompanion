@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 import { Client } from '../shared/models/customer';
 import { Folder } from '../shared/models/Folder';
 import { Router } from '@angular/router';
+import { PopupFormComponent } from "../shared/popup-form/popup-form.component";
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [ SplitScreenComponent, ReactiveFormsModule, CommonModule, HttpClientModule, FormsModule ],
+  imports: [SplitScreenComponent, ReactiveFormsModule, CommonModule, HttpClientModule, FormsModule, PopupFormComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -30,7 +31,7 @@ export class DashboardComponent {
   public editCustomer: boolean = false;
   public editMode : boolean = false;
   public folders : Folder[] =[];
-  public addFolder: Boolean = false;
+  public addFolder: boolean = false;
 
   public newUser: any = {
     firstName: '',

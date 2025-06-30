@@ -16,12 +16,6 @@
     box-shadow: 0 0 0 3px rgba(0, 187, 249, 0.1);
 }
 
-.right-side{
-    display: grid;
-    grid-template-rows: 0.5fr 0.5fr 0.5fr auto;
-    gap: 10px;
-}
-
 ul {
     list-style: none;
     padding: 0;
@@ -45,8 +39,14 @@ li {
     align-items: center;
 }
 
+li span{
+    width: 33.33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 li:hover {
-    cursor: pointer;
     background-color: #f1f5f9;
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -197,6 +197,7 @@ li:hover {
     justify-content: center;
     gap: 20px;
     padding: 15px;
+    margin-bottom: 25px;
 }
 
 .CustomerActions a {
@@ -231,15 +232,46 @@ li:hover {
     padding: 15px;
     background-color: #f8fafc;
     border-radius: 12px;
-    overflow-y: auto;
     min-height: 31svh;
     max-height: 31svh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
-.CustomerFolders h5 {
+.CustomerFolders div{
+    width: 100%;
+}
+
+.CustomerFolders h3 {
+    text-align: center;
     color: #1e293b;
     font-size: 1.1rem;
     margin: 0 0 15px 0;
+}
+
+.totals p{
+    width: 50%;
+    border: 1px solid rgba(0,0,0,0.3);
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.totals{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.totals p:first-child {
+    color: #2563eb; /* Blue for USD */
+}
+
+.totals p:last-child {
+    color: #16a34a; /* Green for LBP */
 }
 
 /* Empty state */
@@ -336,7 +368,30 @@ li:hover {
 }
 
 .editButton{
-    background-color: rgb(1, 179, 1);
+    background-color: #f1f5f9;
+    height: 45px;
+    width: 45px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.editButton:hover{
+    background-color: #00BBF9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 187, 249, 0.2);
+}
+
+.editButton:hover img{
+    filter: brightness(0) invert(1);
+}
+
+.editButton img{
+    height: 20px;
+    width: 20px;
 }
 
 .AddUser button[type="submit"]:hover {
@@ -480,6 +535,136 @@ li:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+
+.deletePayment{
+    border: none;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+}
+
+.delete-buttons{
+    margin-top: 25px;
+    width:100%;
+    display: flex;
+}
+
+.delete-buttons button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.confirm-delete {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.confirm-delete:hover {
+    background-color: #fecaca;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
+}
+
+.cancel-delete {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
+
+.cancel-delete:hover {
+    background-color: #e2e8f0;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Folder details styles */
+.folder-details {
+    background-color: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.folder-details table {
+    margin: 8px 0;
+    color: #334155;
+    width: 100%;
+}
+
+.folder-details table td{
+    width: 50%;
+}
+
+.folder-details table strong {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+/* Edit folder form styles */
+.edit-folder-form {
+    background-color: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.edit-folder-form input,
+.edit-folder-form textarea,
+.edit-folder-form select {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.edit-folder-form select{
+    box-sizing: border-box;
+    width: 98%;
+}
+.edit-folder-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.form-actions button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-actions button:first-child {
+    background-color: #00BBF9;
+    color: white;
+}
+
+.form-actions button:first-child:hover {
+    background-color: #0095d9;
+}
+
+.form-actions button:last-child {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
+
+.form-actions button:last-child:hover {
+    background-color: #e2e8f0;
 }
 
 @media screen and (max-width: 1300px){

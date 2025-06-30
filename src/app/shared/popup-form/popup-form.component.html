@@ -1,0 +1,6 @@
+<div class="PopUp" *ngIf="isOpen" >
+    <button (click)="togglePopup()">x</button>
+    <form id="popupDiv">
+        <ng-content select="[formContent]"></ng-content>
+    </form>
+</div>

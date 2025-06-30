@@ -20,24 +20,133 @@
 
         <ul class="users">
             <li *ngFor="let p of filteredPayments">               
-                {{ p.amount }} {{p.currency}} - {{p.type}}
+                <span>{{ p.amount }} {{p.currency}} - {{p.type}}</span>
                 <span>{{p.displayDate}}</span>
+                <span>
+                    <button class="deletePayment" (click)="toggleDeletePayment(p)"><mat-icon>delete</mat-icon></button>
+                </span>
             </li>
         </ul>
 
     </div>
 
     <div class="right-side" rightContent>
-        <div *ngIf="folderId">
-            <h3>Folder Details</h3>
-            {{folderId}}
+    <div *ngIf="folderDetails && !editFolderMode">
+        <h3>Folder Details</h3>
+        <div class="folder-details">
+            <table>
+                <tr>
+                    <td><strong>Opponents:</strong></td>
+                    <td>{{folderDetails.opponents}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Number:</strong></td>
+                    <td>{{folderDetails.number}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Location:</strong></td>
+                    <td>{{folderDetails.location}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Type:</strong></td>
+                    <td>{{folderDetails.type || 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Status:</strong> </td>
+                    <td>
+                        <span [style.color]="folderDetails.status === 'opened' ? 'green' : 'red'">
+                            {{folderDetails.status}}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Notes:</strong></td>
+                    <td>{{folderDetails.notes || 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Created:</strong></td>
+                    <td>{{folderDetails.createdAt | date:'mediumDate'}}</td>
+                </tr>
+            </table>
+
+        </div>
+
+        <div class="CustomerActions">
+            <button (click)="toggleEditFolderMode()" class="editButton"><img src="assets/images/edit.png" alt="edit"/></button>
+        </div>
+
+        <div class="CustomerFolders">
+            <div>
+                <h3>Fees</h3>
+                <div class="totals">
+                    <p>{{ feeTotals.USD }} USD</p>
+                    <p>{{ feeTotals.LBP }} LBP</p>
+                </div>
+            </div>
+
+            <div>
+                <h3>Expenses</h3>
+                <div class="totals">
+                    <p>{{ expenseTotals.USD }} USD</p>
+                    <p>{{ expenseTotals.LBP }} LBP</p>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 </app-split-screen>
 
-<div *ngIf="addPayment" class="AddUser">
-    <button (click)="toggleAddPayment()">×</button>
-    <form (ngSubmit)="onSubmit()">
+<app-popup-form [isOpen]="folderDetails && editFolderMode">
+    <form formContent>
+            <input type="text" [(ngModel)]="updatedFolderData.opponents" name="opponents" placeholder="Opponents...">
+            <input type="text" [(ngModel)]="updatedFolderData.number" name="number" placeholder="Number...">
+            <input type="text" [(ngModel)]="updatedFolderData.location" name="location" placeholder="Location...">
+            <input type="text" [(ngModel)]="updatedFolderData.type" name="type" placeholder="Type...">
+            <input type="text" [(ngModel)]="updatedFolderData.notes" name="notes" placeholder="Notes...">
+            <select [(ngModel)]="updatedFolderData.status" name="status">
+                <option value="opened">Opened</option>
+                <option value="closed">Closed</option>
+            </select>
+            <div class="form-actions">
+                <button type="button" (click)="updateFolder()">Save</button>
+                <button type="button" (click)="toggleEditFolderMode()">Cancel</button>
+            </div>
+        </form>
+</app-popup-form>
+
+<app-popup-form [isOpen]="deletePayment">
+    <form formContent>
+        <h3>Delete Payment</h3>
+        <p>Are you sure you want to delete this payment?</p>
+        <div class="payment-details">
+            <table>
+                <tr>
+                    <td><strong>Date:</strong></td>
+                    <td>{{selectedPayment.date}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Amount:</strong></td>
+                    <td>{{selectedPayment.amount}} {{selectedPayment.currency}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Type:</strong></td>
+                    <td>{{selectedPayment.type}}</td>
+                </tr>
+                <tr *ngIf="selectedPayment.note">
+                    <td>Notes:</td>
+                    <td>{{selectedPayment.note}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="delete-buttons">
+            <button type="button" class="confirm-delete" (click)="deleteSelectedPayment()">Delete</button>
+            <button type="button" class="cancel-delete" (click)="toggleDeletePayment()">Cancel</button>
+        </div>
+    </form>
+</app-popup-form>
+
+<app-popup-form [isOpen]="addPayment">
+    <form (ngSubmit)="onSubmit()" formContent>
         <select [(ngModel)]="newPayment.type" name="type" required>
             <option value="" selected disabled>Type</option>
             <option value="fees">Fees</option>
@@ -55,4 +164,4 @@
         <input type="date" [(ngModel)]="newPayment.date" name="date" />
         <button type="submit">Add Payment</button>
     </form>
-</div>
+</app-popup-form>

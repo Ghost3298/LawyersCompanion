@@ -39,8 +39,12 @@
                 />
             <ul>
                 <li *ngFor="let item of filteredContent">
-                    <p>{{item.title}}: <br/> {{item.details}}</p>
-                    <button class="editButton" (click)="editButton()"><img src="assets/images/edit.png" ></button>
+                    <div *ngIf="editingContent?._id !== item._id;">
+                        <p>{{item.title}}: <br/> {{item.details}}</p>
+                        <button class="editButton" (click)="startEdit(item)">
+                            <img src="assets/images/edit.png">
+                        </button>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -50,19 +54,28 @@
     </div>
 </app-split-screen>
 
-<div *ngIf="addCat" class="AddCategory">
-    <button (click)="toggleAddCat()">×</button>
-    <form>
-        <input type="text" placeholder="Category..." required>
-        <button type="submit">Save</button>
+<app-popup-form [isOpen]="editingContent ? true : false">
+    <form [formGroup]="editContentForm" (ngSubmit)="updateContent()" formContent>
+        <input type="text" formControlName="title">
+        <textarea formControlName="details"></textarea>
+        <div class="edit-buttons">
+            <button type="submit">Save</button>
+            <button type="button" (click)="cancelEdit()" class="CancelButton">Cancel</button>
+        </div>
     </form>
-</div>
+</app-popup-form>
 
-<div *ngIf="addCont" class="AddCategory">
-    <button (click)="toggleAddContent()" id="exitAddContent">×</button>
-    <form>
-        <input type="text" placeholder="Title..." required>
-        <textarea placeholder="Content..." required></textarea>
+<app-popup-form [isOpen]="addCat">
+    <form #categoryForm="ngForm" (ngSubmit)="addCategory(categoryForm)" formContent>
+        <input type="text" name="name" ngModel placeholder="Category..." required>
+        <button type="submit" class="submitButton">Save</button>
+    </form>
+</app-popup-form>
+
+<app-popup-form [isOpen]="addCont">
+    <form #contentForm="ngForm" (ngSubmit)="addContent(contentForm)" formContent>
+        <input type="text" name="title" ngModel placeholder="Title..." required>
+        <textarea name="details" ngModel placeholder="Content..." required></textarea>
         <button type="submit">Save</button>
     </form>
-</div>
+</app-popup-form>

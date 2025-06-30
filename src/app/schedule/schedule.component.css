@@ -1,3 +1,133 @@
-.leftContent{
+.leftContent {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+app-calendar{
+    width: 100%;
+}
+
+.add-appointment-btn {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 150px;
+}
+
+.add-appointment-btn:hover {
+    background-color: #45a049;
+}
+
+.appointment-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.buttonsGroup{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}   
+
+.appointment-form button {
+    margin-right: 10px;
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.appointment-form button[type="button"] {
+    background-color: #f44336;
+}
+
+.appointments-list {
+    background: white;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.appointments-list h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.appointments-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.appointments-list li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.appointments-list li:hover {
+    background-color: #f5f5f5;
+}
+
+.appointments-list li.selected {
+    background-color: #e3f2fd;
+}
+
+.appointment-details {
+    background-color: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.appointment-details h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.appointment-details button {
+    margin-right: 10px;
+    padding: 8px 15px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.appointment-details button:last-child {
+    background-color: #f44336;
+}
+
+.form-toggle{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+ table {
+    margin: 8px 0;
+    color: #334155;
+    width: 100%;
+}
+
+ table td{
+    width: 50%;
+}
+
+ table strong {
+    color: #1e293b;
+    font-weight: 600;
 }

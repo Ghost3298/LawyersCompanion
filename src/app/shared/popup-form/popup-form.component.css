@@ -1,0 +1,271 @@
+.PopUp{
+    position: fixed;
+    width: 100svw;
+    height: 100svh;
+    background-color: rgba(255,255,255,0.9);
+    backdrop-filter: blur(5px);
+    z-index: 999;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: none;
+}
+
+.PopUp form{
+    background-color: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border: 1px solid #e2e8f0;
+}
+
+:host ::ng-deep input, :host ::ng-deep select, :host ::ng-deep textarea{
+    height: 40px;
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep textarea{
+    resize: vertical;
+}
+
+:host ::ng-deep textarea{
+    height: auto;
+}
+
+:host ::ng-deep input:focus, :host ::ng-deep select:focus, :host ::ng-deep textarea{
+    outline: none;
+    border-color: #00BBF9;
+    box-shadow: 0 0 0 3px rgba(0, 187, 249, 0.1);
+}
+
+:host ::ng-deep option:checked{
+    background-color: #00BBF9;
+}
+
+:host ::ng-deep hr{
+    border: none;
+    height: 1px;
+    background-color: #e2e8f0;
+    margin: 20px 0;
+}
+
+/* Add this at the top of your CSS file */
+:host ::ng-deep .PopUp form button[type="submit"],
+:host ::ng-deep .submitButton,
+:host ::ng-deep .CancelButton {
+    background-color: #00BBF9;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px !important;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+:host ::ng-deep .setClientType{
+    width: 150px;
+    background-color: #00BBF9;
+    color: #ffffff;
+    border:none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 15px
+}
+
+:host ::ng-deep .CancelButton{
+    background-color: #DC2626;
+}
+
+:host ::ng-deep .CancelButton:hover{
+    background-color: #b82020;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 187, 249, 0.1);
+}
+
+:host ::ng-deep .PopUp form button[type="submit"]:hover,
+:host ::ng-deep .submitButton:hover{
+    background-color: #0095D9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 187, 249, 0.1);
+}
+
+:host ::ng-deep .editButton{
+    background-color: rgb(1, 179, 1);
+}
+
+:host ::ng-deep button[type="submit"]:hover{
+    background-color: #0095D9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 187, 249, 0.1);
+}
+
+.PopUp > button{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    height: 36px;
+    width: 36px;
+    background-color: #F1F5F9;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #64748B;
+    cursor: pointer;
+    transition: all 0.2s ease
+}
+
+.PopUp > button:hover{
+    background-color: #FEE2E2;
+    color: #DC2626;
+    transform: scale(1.05);
+}
+
+:host ::ng-deep .add-another-btn{
+    background-color: #f1f5f9;
+    color: #64748b;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+:host ::ng-deep .add-another-btn:hover{
+    background-color: #e2e8f0;
+    color: #1e293b;
+}
+
+:host ::ng-deep .add-another-btn::before{
+    content: "+";
+    font-weight: bold;
+    font-size: 16px;
+}
+
+:host ::ng-deep .additional-field {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+:host ::ng-deep .additional-field input {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+:host ::ng-deep .additional-field button {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: none;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .additional-field button:hover {
+    background-color: #fecaca;
+}
+
+:host ::ng-deep .phone-toggle {
+  background-color: #f1f5f9;
+  border: none;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #64748b;
+  font-size: 12px;
+  padding: 0;
+}
+
+:host ::ng-deep .phone-toggle:hover {
+  background-color: #00BBF9;
+  color: white;
+  transform: translateY(1px);
+}
+
+:host ::ng-deep .phone-toggle::after {
+  content: attr(data-count);
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #00BBF9;
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+:host ::ng-deep .phone-toggle:hover::after {
+  opacity: 1;
+}
+
+@media screen and (max-width: 650px){
+    .PopUp{
+        position: absolute;
+        padding: 15px;
+    }
+
+    .PopUp form{
+        padding: 20px;
+        overflow-y: auto;
+        position: relative; /* Add this */
+    }
+
+    .PopUp > button{
+        position: absolute;
+        top: -5px;        /* Adjust this value as needed */
+        right: -10px;      /* Adjust this value as needed */
+        margin: 0;         /* Remove any default margins */
+        transform: none;
+        z-index: 1;        /* Ensure it appears above the form */
+    }
+}
